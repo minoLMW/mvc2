@@ -6,7 +6,6 @@ import com.koreait.mvc2.util.DBUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,23 +14,13 @@ public class BoardDAO {
     public List<BoardDTO> list() {
         List<BoardDTO> list = new ArrayList<>();
         String sql = "SELECT * FROM board ORDER BY board_idx DESC";
-        System.out.println("게시글 목록 조회 시작");
         
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            System.out.println("SQL 실행: " + sql);
             ResultSet rs = pstmt.executeQuery();
             
-            // 테이블 구조 확인
-            System.out.println("테이블 구조 확인:");
-            ResultSetMetaData metaData = rs.getMetaData();
-            int columnCount = metaData.getColumnCount();
-            for (int i = 1; i <= columnCount; i++) {
-                System.out.println("컬럼 " + i + ": " + metaData.getColumnName(i) + " (" + metaData.getColumnTypeName(i) + ")");
-            }
             
             while (rs.next()) {
-                System.out.println("게시글 데이터 발견: board_idx=" + rs.getInt("board_idx"));
                 BoardDTO dto = new BoardDTO();
                 dto.setBoard_idx(rs.getInt("board_idx"));
                 dto.setUserid(rs.getString("userid"));
@@ -41,11 +30,8 @@ public class BoardDAO {
                 dto.setRegdate(rs.getString("regdate"));
                 dto.setView_count(rs.getInt("view_count"));
                 list.add(dto);
-                System.out.println("게시글 추가: " + dto.getTitle());
             }
-            System.out.println("총 " + list.size() + "개의 게시글을 조회했습니다.");
         } catch (Exception e) {
-            System.out.println("게시글 목록 조회 중 오류 발생:");
             e.printStackTrace();
         }
         return list;
