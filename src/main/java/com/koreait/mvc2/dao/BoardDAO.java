@@ -1,7 +1,6 @@
 package com.koreait.mvc2.dao;
 
 import com.koreait.mvc2.dto.BoardDTO;
-import com.koreait.mvc2.dto.MemberDTO;
 import com.koreait.mvc2.util.DBUtil;
 
 import java.sql.Connection;
@@ -35,16 +34,19 @@ public class BoardDAO {
         return list;
     }
     // 게시글 등록
-    public static void create(BoardDTO dto) {
+    public static boolean create(BoardDTO dto) { //create -> boolean
         String sql = "INSERT INTO board (title, content, nickname) VALUES (?, ?, ?)";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, dto.getTitle());
             ps.setString(2, dto.getContent());
             ps.setString(3, dto.getNickname());
-            ps.executeUpdate();
+        //    ps.executeUpdate();
+            int result = ps.executeUpdate();
+            return result == 1; // 정상 삽입되면 true 반환
         } catch (Exception e) {
             e.printStackTrace();
+            return false;  // 예외 발생시 false 반환
         }
     }
     // 게시글 상세보기
@@ -83,7 +85,7 @@ public class BoardDAO {
         }
     }
     // 게시글 수정
-    public static void edit(BoardDTO dto) {
+    public static boolean edit(BoardDTO dto) {
         String sql = "UPDATE board SET title = ?, content = ? WHERE board_idx = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -93,6 +95,7 @@ public class BoardDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
     // 게시글 삭제
     public static void remove(int board_idx) {
@@ -106,4 +109,4 @@ public class BoardDAO {
         }
     }
 }
-}
+

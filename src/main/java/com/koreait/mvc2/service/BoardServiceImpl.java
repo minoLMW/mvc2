@@ -14,7 +14,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void create(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             BoardDTO dto = new BoardDTO();
-        dto.setUserid(req.getParameter("userid"));
+        dto.setUserid(req.getParameter("userid")); // 세션에서 가져와도 됨
         dto.setNickname(req.getParameter("nickname"));
         dto.setTitle(req.getParameter("title"));
         dto.setContent(req.getParameter("content"));
@@ -50,7 +50,7 @@ public class BoardServiceImpl implements BoardService {
         dto.setNickname(req.getParameter("nickname"));
         dto.setTitle(req.getParameter("title"));
         dto.setContent(req.getParameter("content"));
-        boolean isModify = dao.update(dto); // updateBoard -> update, 실제 BoardDAO안에서는 메서드명이 update()
+        boolean isModify = dao.edit(dto); // updateBoard -> update, 실제 BoardDAO안에서는 메서드명이 update()
         if(isModify) {
             req.getSession().setAttribute("user", dto);
         }
