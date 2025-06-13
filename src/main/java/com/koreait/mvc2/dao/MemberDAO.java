@@ -37,13 +37,16 @@ public class MemberDAO {
 
     public MemberDTO login(String userid, String userpw) {
         String sql = "select * from member where userid = ? and userpw = ? ";
+        System.out.println("로그인 시도: " + userid);
 
         try(Connection conn = DBUtil.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setString(1, userid);
             pstmt.setString(2, userpw);
+            System.out.println("SQL 실행: " + sql);
             ResultSet rs = pstmt.executeQuery();
             if(rs.next()){
+                System.out.println("로그인 성공: " + userid);
                 MemberDTO member = new MemberDTO();
                 member.setIdx(rs.getInt("idx"));
                 member.setUserid(rs.getString("userid"));

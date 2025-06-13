@@ -41,22 +41,23 @@ public class BoardController extends HttpServlet {
                 service.create(req, resp);
                 break;
             case "/list.board":
-                req.getRequestDispatcher("/WEB-INF/views/list.jsp").forward(req, resp);
+                service.list(req, resp);
                 break;
             case "/detail.board":
                 service.detail(req, resp);
+            
                 break;
             case "/detailForm.board":
                 req.getRequestDispatcher("/WEB-INF/views/detail.jsp").forward(req, resp);
                 break; // 추가
             case "/edit.board":
                 if(req.getMethod().equals("GET")) {
-                    req.getRequestDispatcher("/WEB-INF/views/edit.jsp").forward(req, resp);
-                }else if(req.getMethod().equalsIgnoreCase("POST")) {
-                    service.edit(req, resp);
+                    service.edit(req, resp);  // edit 메서드에서 GET 요청 처리
+                } else {
+                    service.edit(req, resp);  // edit 메서드에서 POST 요청 처리
                 }
-                break; // 추가
-            case "/removeForm.board": // member -> board
+                break;
+            case "/removeForm.board": 
                 service.remove(req, resp);
                 break;
             default:
