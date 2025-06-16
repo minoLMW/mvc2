@@ -21,4 +21,8 @@ public class KakaoDTO {
 
     public String getNickname() { return nickname; }
     public void setNickname(String nickname) { this.nickname = nickname; }
+
+    public String getUserid() {
+        return "kakao_" + email;
+    }
 }
