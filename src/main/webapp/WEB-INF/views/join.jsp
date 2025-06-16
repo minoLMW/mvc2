@@ -8,26 +8,87 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>회원가입</title>
+  <title>join</title>
+  <style>
+		@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
+		* {margin:0;padding:0;box-sizing:border-box;font-family:"Quicksand", sans-serif;}
+		body {display:flex;justify-content:center;align-items:center;min-height:100vh;background:#111;width:100%;overflow:hidden;}
+		.ring {position:relative;width:500px;height:500px;display:flex;justify-content:center;align-items:center;}
+		.ring i {position:absolute;inset:0;border:2px solid #fff;transition:0.5s; z-index:-1; opacity:0.3;}
+		.ring i:nth-child(1) {border-radius:38% 62% 63% 37% / 41% 44% 56% 59%;animation:animate 6s linear infinite;}
+		.ring i:nth-child(2) {border-radius:41% 44% 56% 59%/38% 62% 63% 37%;animation:animate 4s linear infinite;}
+		.ring i:nth-child(3) {border-radius:41% 44% 56% 59%/38% 62% 63% 37%;animation:animate2 10s linear infinite;}
+		.ring i {border:6px solid var(--clr);filter:drop-shadow(0 0 20px var(--clr));}
+		@keyframes animate {
+			0% {transform:rotate(0deg);}
+			100% {transform:rotate(360deg);}
+		}
+		@keyframes animate2 {
+			0% {transform:rotate(360deg);}
+			100% {transform:rotate(0deg);}
+		}
+		.signup {position:absolute;width:640px;height:100%;display:flex; flex-wrap:wrap; justify-content:space-between;align-items:center;gap:10px; padding-bottom:80px;}
+		.signup h2 {width:100%; font-size:2em;color:#fff; text-align:center;}
+		.signup .inputBx {position:relative;width:calc(50% - 10px);margin-bottom:10px;;}
+		.signup .inputBx input,
+		.signup .inputBx select,
+		.signup .inputBx button {position:relative;width:100%;padding:12px 20px;background:#111;border:2px solid #fff;border-radius:40px;font-size:19px;color:#fff;box-shadow:none;outline:none;}
+		.signup .inputBx button[type="submit"] {width:100%;background:#0078ff;background:linear-gradient(45deg, #ff357a, #fff172);border:none;cursor:pointer;}
+		.signup .inputBx input::placeholder {color:rgba(255, 255, 255, 0.75);}
+		.signup .inputBx.w-full {display:flex; width:100%;}
+		.signup .inputBx .ssn-all {display:flex; align-items:center; position:relative;width:100%;padding:12px 20px;background:#111;border:2px solid #fff;border-radius:40px;font-size:1.2em;color:#fff;box-shadow:none;outline:none;}
+		.signup .inputBx .ssn-all input {border:none; padding:0; text-align:center; font-size:19px}
+	</style>
 </head>
 <body>
-<h2>회원가입</h2>
-<form method="post" action="joinForm.member">
-  <p>아이디: <input type="text" name="userid"></p>
-  <p>비밀번호: <input type="password" name="userpw"></p>
-  <p>이름: <input type="text" name="name"></p>
-  <p>휴대폰: <input type="text" name="hp"></p>
-  <p>이메일: <input type="email" name="email"></p>
-  <p>성별: <select name="gender">
-    <option value="남자">남자</option>
-    <option value="여자">여자</option>
-  </select></p>
-  <p>주민증록번호 <input type="text" name="ssn1"> - <input type="password" name="ssn2"></p>
-  <p>우편번호: <input type="text" name="zipcode"></p>
-  <p>주소: <input type="text" name="address1"></p>
-  <p>상세주소: <input type="text" name="address2"></p>
-  <p>참고항목: <input type="text" name="address3"></p>
-  <p><button type="submit">완료</button></p>
-</form>
+<div class="ring">
+	<i style="--clr:#00ff0a;"></i>
+	<i style="--clr:#ff0057;"></i>
+	<i style="--clr:#fffd44;"></i>
+	<form method="post" action="joinForm.member" class="signup">
+		<h2>Sign up</h2>
+		<div class="inputBx">
+			<input type="text" name="userid" placeholder="아이디">
+		</div>
+		<div class="inputBx">
+			<input type="password" name="userpw" placeholder="비밀번호">
+		</div>
+		<div class="inputBx">
+			<input type="text" name="name" placeholder="이름">
+		</div>
+		<div class="inputBx">
+			<input type="text" name="hp" placeholder="휴대폰번호">
+		</div>
+		<div class="inputBx">
+			<input type="email" name="email" placeholder="이메일">
+		</div>
+		<div class="inputBx">
+			<select name="gender">
+				<option value="남자">남자</option>
+				<option value="여자">여자</option>
+			</select>
+		</div>
+		<div class="inputBx w-full">
+			<div class="ssn-all">
+				<input type="text" name="ssn1" placeholder="주민번호 앞6자리"> - <input type="password" name="ssn2" placeholder="주민번호 뒤7자리">
+			</div>
+		</div>
+		<div class="inputBx">
+			<input type="text" name="zipcode" placeholder="우편번호">
+		</div>
+		<div class="inputBx">
+			<input type="text" name="address1" placeholder="주소">
+		</div>
+		<div class="inputBx">
+			<input type="text" name="address2" placeholder="상세주소">
+		</div>
+		<div class="inputBx">
+			<input type="text" name="address3" placeholder="참고항목">
+		</div>
+		<div class="inputBx w-full">
+			<button type="submit">완료</button>
+		</div>
+	</form>
+</div>
 </body>
 </html>
