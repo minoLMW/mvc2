@@ -28,7 +28,8 @@ public class KakaoServiceImpl implements KakaoService {
             return AUTH_BASE_URL
                     + "?client_id=" + CLIENT_ID
                     + "&redirect_uri=" + encodedRedirect
-                    + "&response_type=code";
+                    + "&response_type=code"
+                    + "&prompt=login";  // 항상 로그인/계정 선택 화면 표시
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("Redirect URI 인코딩 실패", e);
         }
