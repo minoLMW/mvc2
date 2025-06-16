@@ -17,7 +17,10 @@ public class BoardServiceImpl implements BoardService {
 
     // 게시글 작성
     @Override
-    public void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void create(HttpServletRequest request,
+                       HttpServletResponse response,
+                       String originalName,
+                       String storedName) throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
             if (session.getAttribute("user") == null) {
@@ -27,26 +30,42 @@ public class BoardServiceImpl implements BoardService {
 
             String title = request.getParameter("title");
             String content = request.getParameter("content");
-            if (title == null || content == null || title.isBlank() || content.isBlank()) {
-                throw new RuntimeException("제목과 내용을 모두 입력해주세요.");
+
+            if (title == null || title.trim().isEmpty()) {
+                throw new RuntimeException("제목을 입력해주세요.");
+            }
+            if (content == null || content.trim().isEmpty()) {
+                throw new RuntimeException("내용을 입력해주세요.");
             }
 
+            // 👇 SessionUserUtil로 사용자 정보 통합 추출
             String[] userInfo = getUserIdAndNickname(session);
+            String userId = userInfo[0];
+            String nickname = userInfo[1];
 
+            // DTO 구성
             BoardDTO board = new BoardDTO();
             board.setTitle(title);
             board.setContent(content);
-            board.setUserid(userInfo[0]);
-            board.setNickname(userInfo[1]);
+            board.setUserid(userId);
+            board.setNickname(nickname);
 
-            if (!dao.create(board)) {
-                throw new RuntimeException("게시글 작성 실패");
+            if (storedName != null && !storedName.isEmpty()) {
+                board.setOriginalName(originalName);
+                board.setFileName(storedName);
+                board.setFilePath("uploads/" + storedName);
+            }
+
+            boolean result = dao.create(board);
+            if (!result) {
+                throw new RuntimeException("게시글 작성에 실패했습니다.");
             }
 
             response.sendRedirect("list.board");
-        } catch (Exception e) {
+
+        }catch (Exception e) {
             e.printStackTrace();
-            throw new ServletException("게시글 작성 중 오류 발생");
+            response.sendRedirect("login.jsp");
         }
     }
 
@@ -156,19 +175,15 @@ public class BoardServiceImpl implements BoardService {
         try {
             request.setCharacterEncoding("UTF-8");
             HttpSession session = request.getSession();
-
-            if (session.getAttribute("user") == null) {
-                response.sendRedirect("login.jsp");
-                return;
-            }
-
             String[] userInfo = getUserIdAndNickname(session);
+            String userId = userInfo[0];
+
             int board_idx = Integer.parseInt(request.getParameter("board_idx"));
             String content = request.getParameter("content");
 
             BoardCommentDTO dto = new BoardCommentDTO();
             dto.setBoard_idx(board_idx);
-            dto.setUser_id(userInfo[0]);
+            dto.setUser_id(userId);
             dto.setContent(content);
 
             if (!commentDAO.insertComment(dto)) {

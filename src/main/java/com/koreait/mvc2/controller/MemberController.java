@@ -84,8 +84,12 @@ public class MemberController extends HttpServlet {
                 String code = req.getParameter("code");
                 String accessToken = kakaoService.getAccessToken(code);
                 KakaoDTO kakaoUser = kakaoService.getUserInfo(accessToken);
+                // 세션 저장
                 kakaoService.registerOrLogin(kakaoUser, req.getSession());
                 req.setAttribute("kakaoUser", kakaoUser);
+                // 디버깅 로그
+                System.out.println("카카오 사용자 닉네임: " + kakaoUser.getNickname());
+                System.out.println("카카오 이메일: " + kakaoUser.getEmail());
                 req.getRequestDispatcher("/WEB-INF/views/result.jsp").forward(req, resp);
                 break;
             default:

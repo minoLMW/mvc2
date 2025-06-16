@@ -19,6 +19,9 @@ public class DBUtil {
         }
     }
 
+    /**
+     * 데이터베이스 연결을 반환합니다.
+     */
     public static Connection getConnection() throws SQLException {
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
