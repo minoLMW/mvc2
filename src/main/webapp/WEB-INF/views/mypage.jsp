@@ -625,7 +625,7 @@
             glare: true,
             "max-glare": 1
         });
-    });
+    }); 
 </script>
 </body>
 </html>
