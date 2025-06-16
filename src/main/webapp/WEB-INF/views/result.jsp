@@ -44,7 +44,7 @@
 
     <%-- 일반 로그인 --%>
     <c:when test="${not empty loginUser}">
-      <h1>LOGIN_SUCCESS: ${loginUser.userid} (${loginUser.name}) authenticated.</h1>
+      <h1>AUTH_SUCCESS: ${loginUser.userid} (${loginUser.name}) authenticated.</h1>
       <p class="output"><a href="mypage.member">Mypage</a> | <a href="logout.member">logout</a></p>
     </c:when>
 
