@@ -9,5 +9,6 @@
 </h1>
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
+<a href="login.member">로그인 바로가기</a>
 </body>
 </html>

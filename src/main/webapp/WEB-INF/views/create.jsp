@@ -29,8 +29,10 @@
     .title {margin-bottom:20px; color:#000}
     .title input {width:100%; padding:12px; border:1px solid #e6e6e6; border-radius:12px; font-size:20px;}
     .content {color:#000;}
+    .title-text {color:#fff; font-size:17px;}
     .button {margin-top:20px; text-align:center;}
-    .button button {width:160px; height:50px; border-radius:12px; font-size:20px; border:none; background-color:#cdb4db;}
+    .button a,
+    .button button {display:inline-block; width:160px; height:50px; line-height:50px; border-radius:12px; font-size:20px; border:none; background-color:#cdb4db; color:#fff}
     .note-editor {height:500px; background-color:#fff;}
 
     /* 눈 내리는 배경 클래스 */
@@ -59,23 +61,24 @@
 <h2>게시글 작성</h2>
 <form method="post" action="${pageContext.request.contextPath}/createForm.board">
   <div class="title">
-    <label for="title">제목</label>
+    <label for="title" class="title-text">제목</label>
     <input type="text" id="title" name="title" placeholder="제목을 입력하세요" required />
   </div>
   <div class="content">
-    <label for="summernote">내용</label>
+    <label for="summernote" class="title-text">내용</label>
     <textarea id="summernote" name="editordata" class="note-editor note-frame" placeholder="내용을 입력하세요" required></textarea>
   </div>
   <div class="button">
     <button type="submit">작성 완료</button>
+    <a href="list.board">목록</a>
   </div>
 </form>
 <script>
   $(document).ready(function() {
     $('#summernote').summernote({
-      height: 300,
-      minHeight: 200,
-      maxHeight: 500
+      height: 450,
+      minHeight: 450,
+      maxHeight: 450
     });
   });
 </script>
