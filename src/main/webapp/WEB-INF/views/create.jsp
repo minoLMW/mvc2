@@ -32,7 +32,7 @@
 </head>
 <body class="snowing">
 <h2>게시글 작성</h2>
-<form method="post" action="createForm.board">
+<form method="post" action="createForm.board" enctype="multipart/form-data">
   <div class="title">
     <label for="title">제목</label>
     <input type="text" id="title" name="title" placeholder="제목을 입력하세요" required />
@@ -40,6 +40,10 @@
   <div class="content">
     <label for="content">내용</label>
     <textarea id="content" name="content" placeholder="내용을 입력하세요" required></textarea>
+  </div>
+  <div class="file-upload">
+    <label for="file">첨부 파일</label>
+    <input type="file" id="file" name="file" />
   </div>
   <div class="button">
     <button type="submit">작성 완료</button>
