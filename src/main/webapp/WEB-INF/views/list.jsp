@@ -19,6 +19,7 @@
             font-style: normal;
         }
         body {padding:0 25px; background-color:#001b3b; color:#fff;}
+		.container {width:1500px; margin:0 auto;}
         h2 {display:flex; justify-content:center; align-items:center; padding:25px 50px 25px 25px; font-size:50px; font-family: 'SF_HambakSnow';}
         h2::after {content:''; display:inline-block; width:75px; height:75px;  background:url('https://www.notion.so/_assets/a7e5ea83ae6a4462.gif') no-repeat center right / 75px auto;;}
         table {width:calc(100% - 50px); margin:0 auto; table-layout:fixed; border:none;border-collapse: collapse; border-spacing: 0;}
@@ -27,11 +28,11 @@
         table tbody td {padding:12px; border-top:1px solid #666;}
         table tbody tr td a {font-family:'맑은 고딕'; color:#fff}
         table tbody tr:last-child td {border-bottom:1px solid #666;}
-        table tbody tr td:hover {background-color:#14a5a5;}
+        table tbody tr:hover {background-color:#14a5a5;}
         table tbody tr td {position:relative;}
         table tbody tr td::before {content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:1px; height:16px; background-color:#e6e6e6;}
         table tbody tr td:first-child::before {display:none;}
-        table tbody tr td[colspan="6"]:hover {background:none;}
+        table tbody tr.board-none:hover {background:none;}
         .num {text-align:center;}
         .title {overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align:center;}
         .title a {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;text-decoration:underline;}
@@ -62,10 +63,13 @@
         .mode-change {text-align:right;}
         .mode-change button {height:22px; padding:0 4px; border:1px solid #fff; border-radius:3px; background:transparent; color:#fff;}
         table.gallery-mode {}
+		table.gallery-mode colgroup,
         table.gallery-mode thead {display:none;}
-        table.gallery-mode tbody {display:flex; flex-wrap:warp; width:1500px; margin:0 auto;}
-        table.gallery-mode tbody tr {display:flex; width:200px; border:1px solid #fff; border-radius:12px;}
-        
+        table.gallery-mode tbody {display:flex; flex-wrap:warp;}
+        table.gallery-mode tbody tr {display:flex; flex-direction:column; width:200px; border:1px solid #fff; border-radius:12px;}
+        table.gallery-mode tbody tr:hover {background:none;}
+        table.gallery-mode tbody tr td {border:none ;}
+        table.gallery-mode tbody tr td::before {display:none}
     </style>
 </head>
 <body class="snowing">
@@ -103,7 +107,7 @@
         </thead>
         <tbody>
         <c:if test="${empty list}">
-            <tr>
+            <tr class="board-none">
                 <td colspan="6" style="text-align: center;">등록된 게시글이 없습니다.</td>
             </tr>
         </c:if>
