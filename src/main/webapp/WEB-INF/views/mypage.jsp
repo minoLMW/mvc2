@@ -91,23 +91,25 @@
             </c:choose>
         </p>
 
-        <!-- 일반 회원만 회원정보 수정 및 탈퇴 가능 -->
-        <c:if test="${not empty member}">
-            <form method="get" action="modifyForm.member"><button type="submit">회원정보 수정</button></form>
-            <form method="get" action="createForm.member"><button type="submit">게시물 작성</button></form>
-            <form method="get" action="list.board"><button type="submit">게시글 목록</button></form>
-            <form method="post" action="delete.member" onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
-                <button type="submit">회원 탈퇴</button>
-            </form>
-        </c:if>
-        <!-- 카카오/구글은 회원정보 수정 불가 -->
-        <c:if test="${not empty kakao || not empty google}">
-            <form method="get" action="createForm.member"><button type="submit">게시물 작성</button></form>
-            <form method="get" action="list.board"><button type="submit">게시글 목록</button></form>
-            <form method="post" action="delete.member" onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
-                <button type="submit">회원 탈퇴</button>
-            </form>
-        </c:if>
+        <div class="buttons">
+            <!-- 일반 회원만 회원정보 수정 및 탈퇴 가능 -->
+            <c:if test="${not empty member}">
+                <form method="get" action="modifyForm.member"><button type="submit">회원정보 수정</button></form>
+                <form method="get" action="createForm.member"><button type="submit">게시물 작성</button></form>
+                <form method="get" action="list.board"><button type="submit">게시글 목록</button></form>
+                <form method="post" action="delete.member" onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
+                    <button type="submit">회원 탈퇴</button>
+                </form>
+            </c:if>
+            <!-- 카카오/구글은 회원정보 수정 불가 -->
+            <c:if test="${not empty kakao || not empty google}">
+                <form method="get" action="createForm.member"><button type="submit">게시물 작성</button></form>
+                <form method="get" action="list.board"><button type="submit">게시글 목록</button></form>
+                <form method="post" action="delete.member" onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
+                    <button type="submit">회원 탈퇴</button>
+                </form>
+            </c:if>
+        </div>
 
         <a href="logout.member">로그아웃</a>
     </div>
