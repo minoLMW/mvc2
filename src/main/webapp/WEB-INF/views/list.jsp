@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: minwo
-  Date: 2025-06-13
-  Time: 오후 4:07
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -92,7 +85,7 @@
               <td class="createdAt">${board.regdate}</td>
               <td class="views">${board.view_count}</td>
               <td class="actions">
-                <c:if test="${sessionScope.user.userid eq board.userid}">
+                <c:if test="${loginUserId eq board.userid}">
                   <a href="edit.board?board_idx=${board.board_idx}">수정</a>
                   <a href="removeForm.board?board_idx=${board.board_idx}">삭제</a>
                 </c:if>

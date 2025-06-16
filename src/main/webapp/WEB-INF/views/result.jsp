@@ -31,6 +31,7 @@
     <p><a href="mypage.member">마이페이지</a> | <a href="logout.member">로그아웃</a></p>
   </c:when>
 
+  <%-- 구글 로그인 --%>
   <c:when test="${not empty user}">
     <h2>${user.name}님, 구글 로그인 성공!</h2>
     <p>이메일: ${user.email}</p>

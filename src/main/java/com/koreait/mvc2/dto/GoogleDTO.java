@@ -16,6 +16,9 @@ public class GoogleDTO {
     public String getName() { return name; }
     public String getEmail() { return email; }
     public String getPicture() { return picture; }
+    public String getUserid() {
+        return "google_" + email;
+    }
 
     public void setName(String name) { this.name = name; }
     public void setEmail(String email) { this.email = email; }

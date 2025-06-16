@@ -2,6 +2,8 @@ package com.koreait.mvc2.controller;
 
 import com.koreait.mvc2.service.BoardService;
 import com.koreait.mvc2.service.BoardServiceImpl;
+import com.koreait.mvc2.util.SessionUserUtil;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,6 +44,8 @@ public class BoardController extends HttpServlet {
                 break;
             case "/list.board":
                 service.list(req, resp);
+                String loginUserId = SessionUserUtil.getUserId(req.getSession());
+                req.setAttribute("loginUserId", loginUserId);
                 break;
             case "/detail.board":
                 service.detail(req, resp);
