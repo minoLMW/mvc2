@@ -58,7 +58,7 @@
         .glass-card h2 {color:#fff; font-size:30px;}
         .glass-card p {margin-top:30px; color:#fff; font-size:22px;}
         .glass-card p + p {margin-top:0;}
-        .glass-card .buttons {display:flex; gap:20px; width:100%;}
+        .glass-card .buttons {display:flex; justify-content:center; gap:20px; width:100%;}
         .glass-card a,
         .glass-card button {display:inline-block;position:relative;padding:8px 20px;margin-top:15px;background-color:#fff;border:none;border-radius:20px;color:#000;font-weight:bold;text-decoration:none;cursor:pointer;}
         .glass-card a {background-color:#000; color:#fff;}
