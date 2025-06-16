@@ -18,9 +18,9 @@ public class BoardServiceImpl implements BoardService {
     // 게시글 작성
     @Override
     public void create(HttpServletRequest request,
-            HttpServletResponse response,
-            String originalName,
-            String storedName) throws ServletException, IOException {
+                       HttpServletResponse response,
+                       String originalName,
+                       String storedName) throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
             if (session.getAttribute("user") == null) {
@@ -42,7 +42,6 @@ public class BoardServiceImpl implements BoardService {
 
 
             // 2. 세션 체크
-            HttpSession session = request.getSession();
             MemberDTO sessionDto = (MemberDTO) session.getAttribute("user");
             if (sessionDto == null) {
                 throw new RuntimeException("로그인이 필요한 기능입니다.");
@@ -67,7 +66,7 @@ public class BoardServiceImpl implements BoardService {
             if (!result) {
                 throw new RuntimeException("게시글 작성에 실패했습니다.");
             }
-            
+
             // 4. 목록으로 이동
             response.sendRedirect("list.board");
         } catch (Exception e) {
@@ -115,8 +114,10 @@ public class BoardServiceImpl implements BoardService {
     // 게시글 수정
     @Override
     public void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         try {
             HttpSession session = request.getSession();
+            MemberDTO sessionDto = (MemberDTO) session.getAttribute("user");
             String[] userInfo = getUserIdAndNickname(session);
             String userId = userInfo[0];
 
@@ -140,11 +141,7 @@ public class BoardServiceImpl implements BoardService {
                 throw new RuntimeException("수정 권한이 없습니다.");
             }
 
-            if (board_idx == null || board_idx.trim().isEmpty()) throw new RuntimeException("게시글 번호가 필요합니다.");
-            HttpSession session = request.getSession();
-            MemberDTO sessionDto = (MemberDTO) session.getAttribute("user");
             if (sessionDto == null) throw new RuntimeException("로그인이 필요합니다.");
-            BoardDTO board = dao.detail(Integer.parseInt(board_idx));
             if (!sessionDto.getUserid().equals(board.getUserid())) throw new RuntimeException("작성자만 수정할 수 있습니다.");
             board.setTitle(title);
             board.setContent(content);
@@ -188,6 +185,7 @@ public class BoardServiceImpl implements BoardService {
         try {
             request.setCharacterEncoding("UTF-8");
             HttpSession session = request.getSession();
+            String[] userInfo = getUserIdAndNickname(session);
             MemberDTO user = (MemberDTO) session.getAttribute("user");
             if (user == null) throw new RuntimeException("로그인이 필요합니다.");
             int board_idx = Integer.parseInt(request.getParameter("board_idx"));
