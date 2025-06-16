@@ -23,6 +23,7 @@
 </head>
 <body>
 
+
 <div class="noise"></div>
 <div class="overlay"></div>
 <div class="terminal">
@@ -32,44 +33,46 @@
     <c:when test="${not empty success}">
       <h1>
         <c:choose>
-          <c:when test="${success}">회원가입이 성공적으로 처리되었습니다!</c:when>
-          <c:otherwise>회원가입 중 문제가 발생했습니다.</c:otherwise>
+          <c:when test="${success}">ACCOUNT_CREATION_SUCCESS :: Operation status: 200 OK</c:when>
+          <c:otherwise>Unable to complete registration. Retry the operation.</c:otherwise>
         </c:choose>
       </h1>
-      <p class="output"><a href="mypage.member">마이페이지</a></p>
+      <p class="output"><a href="mypage.member">Mypage</a></p>
     </c:when>
 
     <%-- 일반 로그인 --%>
     <c:when test="${not empty loginUser}">
-      <h1>${loginUser.userid} (${loginUser.name})님, 로그인 성공!</h1>
-      <p class="output"><a href="mypage.member">마이페이지</a> | <a href="logout.member">로그아웃</a></p>
+      <h1>LOGIN_SUCCESS: ${loginUser.userid} (${loginUser.name}) authenticated.</h1>
+      <p class="output"><a href="mypage.member">Mypage</a> | <a href="logout.member">logout</a></p>
     </c:when>
 
     <%-- 카카오 로그인 --%>
     <c:when test="${not empty kakaoUser}">
-      <h1>${kakaoUser.nickname}님, 로그인 성공!</h1>
-      <p class="output"><a href="mypage.member">마이페이지</a> | <a href="logout.member">로그아웃</a></p>
+      <h1>AUTH_SUCCESS: Provider=Kakao, User=${kakaoUser.nickname}</h1>
+      <p class="output"><a href="mypage.member">Mypage</a> | <a href="logout.member">logout</a></p>
     </c:when>
 
     <%-- 구글 로그인 --%>
     <c:when test="${not empty user}">
-      <h1>${user.name}님, 구글 로그인 성공!</h1>
-      <p class="output">이메일: ${user.email}</p>
+      <h1>AUTH_SUCCESS: ${user.name} :: PROVIDER=Google :: RESULT=OK</h1>
+      <p class="output">E-mail: ${user.email}</p>
 
       <c:if test="${not empty user.picture}">
         <img src="${user.picture}" width="100" height="100" />
       </c:if>
 
-      <p class="output"><a href="mypage.member">마이페이지</a> | <a href="logout.member">로그아웃</a></p>
+      <p class="output"><a href="mypage.member">Mypage</a> | <a href="logout.member">logout</a></p>
     </c:when>
 
     <%-- 로그인 실패 --%>
     <c:otherwise>
-      <h1>로그인 실패</h1>
-      <p class="output">아이디 또는 비밀번호를 확인하세요 🤢🤢🤢</p>
+      <h1>LOGIN_FAILED</h1>
+      <p class="output">Access denied. Re-enter valid ID and password. 🤢🤢🤢</p>
+      <p class="output">Good luck.</p>
     </c:otherwise>
 
   </c:choose>
+
 </div>
 </body>
 </html>

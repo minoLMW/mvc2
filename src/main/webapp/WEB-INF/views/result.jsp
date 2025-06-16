@@ -3,53 +3,78 @@
 <html>
 <head>
   <title>로그인 결과</title>
+  <style>
+    @import 'https://fonts.googleapis.com/css?family=Inconsolata';
+    html {min-height: 100%;}
+    body {position:fixed; left:0; top:0; width:100%; box-sizing: border-box;height: 100%;background-color: #000000;background-image: radial-gradient(#11581E, #041607), url("https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif");background-repeat: no-repeat;background-size: cover;font-family: 'Inconsolata', Helvetica, sans-serif;font-size: 1.5rem;color: rgba(128, 255, 128, 0.8);text-shadow:0 0 1ex rgba(51, 255, 51, 1),0 0 2px rgba(255, 255, 255, 0.8);}
+    .noise {pointer-events: none;position: absolute;width: 100%;height: 100%;background-image: url("https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif");background-repeat: no-repeat;background-size: cover;z-index: -1;opacity: .02;}
+    .overlay {pointer-events: none;position: absolute;width: 100%;height: 100%;background:repeating-linear-gradient(180deg,rgba(0, 0, 0, 0) 0,rgba(0, 0, 0, 0.3) 50%,rgba(0, 0, 0, 0) 100%);background-size: auto 4px;z-index: 1;}
+    .overlay::before {content: "";pointer-events: none;position: absolute;display: block;top: 0;left: 0;right: 0;bottom: 0;width: 100%;height: 100%;background-image: linear-gradient(0deg,transparent 0%,rgba(32, 128, 32, 0.2) 2%,rgba(32, 128, 32, 0.8) 3%,rgba(32, 128, 32, 0.2) 3%,transparent 100%);background-repeat: no-repeat;animation: scan 7.5s linear 0s infinite;}
+    @keyframes scan {
+      0% { background-position: 0 -100vh; }
+      35%, 100% { background-position: 0 100vh; }
+    }
+    .terminal {box-sizing: inherit;position: absolute;height: 100%;width: 1000px;max-width: 100%;padding: 4rem;text-transform: uppercase;}
+    .output {color: rgba(128, 255, 128, 0.8);text-shadow:0 0 1px rgba(51, 255, 51, 0.4),0 0 2px rgba(255, 255, 255, 0.8);}
+    .output::before {content: "> ";}
+    a {color: #fff;text-decoration: none;}
+    a::before {content: "[";}
+    a::after {content: "]";}
+    .errorcode {color: white;}
+  </style>
 </head>
 <body>
 
-<c:choose>
 
-  <%-- 회원가입 결과 --%>
-  <c:when test="${not empty success}">
-    <h2>
-      <c:choose>
-        <c:when test="${success}">회원가입이 성공적으로 처리되었습니다!</c:when>
-        <c:otherwise>회원가입 중 문제가 발생했습니다.</c:otherwise>
-      </c:choose>
-    </h2>
-    <p><a href="mypage.member">마이페이지</a></p>
-  </c:when>
+<div class="noise"></div>
+<div class="overlay"></div>
+<div class="terminal">
+  <c:choose>
 
-  <%-- 일반 로그인 --%>
-  <c:when test="${not empty loginUser}">
-    <h2>${loginUser.userid} (${loginUser.name})님, 로그인 성공!</h2>
-    <p><a href="mypage.member">마이페이지</a> | <a href="logout.member">로그아웃</a></p>
-  </c:when>
+    <%-- 회원가입 결과 --%>
+    <c:when test="${not empty success}">
+      <h1>
+        <c:choose>
+          <c:when test="${success}">ACCOUNT_CREATION_SUCCESS :: Operation status: 200 OK</c:when>
+          <c:otherwise>Unable to complete registration. Retry the operation.</c:otherwise>
+        </c:choose>
+      </h1>
+      <p class="output"><a href="mypage.member">Mypage</a></p>
+    </c:when>
 
-  <%-- 카카오 로그인 --%>
-  <c:when test="${not empty kakaoUser}">
-    <h2>${kakaoUser.nickname}님, 로그인 성공!</h2>
-    <p><a href="mypage.member">마이페이지</a> | <a href="logout.member">로그아웃</a></p>
-  </c:when>
+    <%-- 일반 로그인 --%>
+    <c:when test="${not empty loginUser}">
+      <h1>LOGIN_SUCCESS: ${loginUser.userid} (${loginUser.name}) authenticated.</h1>
+      <p class="output"><a href="mypage.member">Mypage</a> | <a href="logout.member">logout</a></p>
+    </c:when>
 
-  <%-- 구글 로그인 --%>
-  <c:when test="${not empty user}">
-    <h2>${user.name}님, 구글 로그인 성공!</h2>
-    <p>이메일: ${user.email}</p>
+    <%-- 카카오 로그인 --%>
+    <c:when test="${not empty kakaoUser}">
+      <h1>AUTH_SUCCESS: Provider=Kakao, User=${kakaoUser.nickname}</h1>
+      <p class="output"><a href="mypage.member">Mypage</a> | <a href="logout.member">logout</a></p>
+    </c:when>
 
-    <c:if test="${not empty user.picture}">
-      <img src="${user.picture}" width="100" height="100" />
-    </c:if>
+    <%-- 구글 로그인 --%>
+    <c:when test="${not empty user}">
+      <h1>AUTH_SUCCESS: ${user.name} :: PROVIDER=Google :: RESULT=OK</h1>
+      <p class="output">E-mail: ${user.email}</p>
 
-    <p><a href="mypage.member">마이페이지</a> | <a href="logout.member">로그아웃</a></p>
-  </c:when>
+      <c:if test="${not empty user.picture}">
+        <img src="${user.picture}" width="100" height="100" />
+      </c:if>
 
-  <%-- 로그인 실패 --%>
-  <c:otherwise>
-    <h2>로그인 실패</h2>
-    <p>아이디 또는 비밀번호를 확인하세요 🤢🤢🤢</p>
-  </c:otherwise>
+      <p class="output"><a href="mypage.member">Mypage</a> | <a href="logout.member">logout</a></p>
+    </c:when>
 
-</c:choose>
+    <%-- 로그인 실패 --%>
+    <c:otherwise>
+      <h1>LOGIN_FAILED</h1>
+      <p class="output">Access denied. Re-enter valid ID and password. 🤢🤢🤢</p>
+      <p class="output">Good luck.</p>
+    </c:otherwise>
 
+  </c:choose>
+
+</div>
 </body>
 </html>
