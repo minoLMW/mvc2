@@ -20,6 +20,8 @@
     .title input {width:100%; padding:12px; border:1px solid #E6E6E6; border-radius:12px; font-size:20px;}
     .content {margin-bottom:20px;}
     .content textarea {width:100%; height:300px; padding:12px; border:1px solid #E6E6E6; border-radius:12px; font-size:20px; resize:none;}
+    .file-upload {margin-bottom:20px;}
+    .file-upload input {font-size:16px;}
     .button {margin-top:20px; text-align:center;}
     .button button {width:160px; height:50px; border-radius:12px; font-size:20px; border:none; background-color:#cdb4db; color:#fff;}
     /* 눈 내리는 배경 클래스 */
@@ -45,7 +47,7 @@
 </head>
 <body class="snowing">
 <h2>게시글 작성</h2>
-<form method="post" action="createForm.board">
+<form method="post" action="createForm.board" enctype="multipart/form-data">
   <div class="title">
     <label for="title">제목</label>
     <input type="text" id="title" name="title" placeholder="제목을 입력하세요" required />
@@ -53,6 +55,10 @@
   <div class="content">
     <label for="content">내용</label>
     <textarea id="content" name="content" placeholder="내용을 입력하세요" required></textarea>
+  </div>
+  <div class="file-upload">
+    <label for="file">첨부 파일</label>
+    <input type="file" id="file" name="file" />
   </div>
   <div class="button">
     <button type="submit">작성 완료</button>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+             https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
     <!-- 로그인 필터 등록 -->
     <filter>
@@ -38,7 +39,6 @@
         <servlet-name>GoogleLogin</servlet-name>
         <url-pattern>/login/google</url-pattern>
     </servlet-mapping>
-
     <!-- Google 콜백 서블릿 -->
     <servlet>
         <servlet-name>GoogleCallback</servlet-name>
@@ -48,4 +48,20 @@
         <servlet-name>GoogleCallback</servlet-name>
         <url-pattern>/oauth2callback</url-pattern>
     </servlet-mapping>
+
+    <!-- 추가한 FileController -->
+    <servlet>
+        <servlet-name>FileController</servlet-name>
+        <servlet-class>com.koreait.mvc2.controller.FileController</servlet-class>
+        <multipart-config>
+            <max-file-size>5242880</max-file-size>       <!-- 5MB -->
+            <max-request-size>20971520</max-request-size> <!-- 20MB -->
+            <file-size-threshold>0</file-size-threshold>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FileController</servlet-name>
+        <url-pattern>/file/*</url-pattern>
+    </servlet-mapping>
+
 </web-app>

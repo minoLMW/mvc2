@@ -4,18 +4,26 @@ import com.koreait.mvc2.service.BoardService;
 import com.koreait.mvc2.service.BoardServiceImpl;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024,      // 1MB
+        maxFileSize = 1024 * 1024 * 10,       // 10MB
+        maxRequestSize = 1024 * 1024 * 15     // 15MB
+)
 @WebServlet("*.board")
 public class BoardController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private BoardService service = new BoardServiceImpl();
-
-    public BoardController() {}
+    private static final String UPLOAD_DIR = "uploads";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,7 +46,21 @@ public class BoardController extends HttpServlet {
                 req.getRequestDispatcher("/WEB-INF/views/create.jsp").forward(req, resp);
                 break;
             case "/createForm.board":
-                service.create(req, resp);
+                // 파일 처리
+                Part filePart = req.getPart("file");
+                String originalName = null;
+                String storedName = null;
+                if (filePart != null && filePart.getSize() > 0) {
+                    originalName = filePart.getSubmittedFileName();
+                    String ext = originalName.substring(originalName.lastIndexOf('.'));
+                    storedName = UUID.randomUUID().toString() + ext;
+                    String uploadPath = getServletContext().getRealPath("/uploads");
+                    File uploadDir = new File(uploadPath);
+                    if (!uploadDir.exists()) uploadDir.mkdirs();
+                    filePart.write(uploadPath + File.separator + storedName);
+                }
+                // 서비스 호출 (원본명, 저장명 전달)
+                service.create(req, resp, originalName, storedName);
                 break;
             case "/list.board":
                 service.list(req, resp);
@@ -48,15 +70,11 @@ public class BoardController extends HttpServlet {
                 break;
             case "/detailForm.board":
                 req.getRequestDispatcher("/WEB-INF/views/detail.jsp").forward(req, resp);
-                break; // 추가
-            case "/edit.board":
-                if(req.getMethod().equals("GET")) {
-                    service.edit(req, resp);  // edit 메서드에서 GET 요청 처리
-                } else {
-                    service.edit(req, resp);  // edit 메서드에서 POST 요청 처리
-                }
                 break;
-            case "/removeForm.board": 
+            case "/edit.board":
+                service.edit(req, resp);
+                break;
+            case "/removeForm.board":
                 service.remove(req, resp);
                 break;
             case "/commentCreate.board":

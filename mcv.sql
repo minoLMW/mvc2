@@ -47,14 +47,19 @@ CREATE INDEX idx_board_userid ON board(userid);
 
 -- 4) 파일 첨부 테이블
 CREATE TABLE file (
-                      file_idx   INT            AUTO_INCREMENT PRIMARY KEY,
-                      board_idx  INT            NOT NULL,
-                      _filename  VARCHAR(100)   NOT NULL,
-                      _file      BLOB,
+                      file_idx      INT            AUTO_INCREMENT PRIMARY KEY,
+                      board_idx     INT            NOT NULL,
+                      original_name VARCHAR(255)   NOT NULL,
+                      stored_name   VARCHAR(255)   NOT NULL,
+                      content_type  VARCHAR(100),
+                      size          BIGINT,
+                      upload_path   VARCHAR(500),
+                      uploaded_at   DATETIME       DEFAULT CURRENT_TIMESTAMP,
                       FOREIGN KEY (board_idx) REFERENCES board(board_idx) ON DELETE CASCADE
 ) ENGINE=InnoDB
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
+
 
 -- 5) 카카오 사용자 테이블
 CREATE TABLE kakao_user (
@@ -80,3 +85,5 @@ CREATE TABLE board_comment (
 SHOW TABLES;
 
 select * from board;
+
+select * from file;
