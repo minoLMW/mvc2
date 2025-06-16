@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+    <!-- 로그인 필터 등록 -->
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>com.koreait.mvc2.filter.LoginFilter</filter-class>
+    </filter>
+    <!-- 로그인 필터 적용 -->
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/mypage.member</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/modifyForm.member</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/delete.member</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>BoardList</servlet-name>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BoardList</servlet-name>
+        <url-pattern>/list</url-pattern>
+    </servlet-mapping>
+    <!-- Google 로그인 서블릿 -->
+    <servlet>
+        <servlet-name>GoogleLogin</servlet-name>
+        <servlet-class>com.koreait.mvc2.controller.GoogleLoginController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GoogleLogin</servlet-name>
+        <url-pattern>/login/google</url-pattern>
+    </servlet-mapping>
+
+    <!-- Google 콜백 서블릿 -->
+    <servlet>
+        <servlet-name>GoogleCallback</servlet-name>
+        <servlet-class>com.koreait.mvc2.controller.GoogleCallbackController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GoogleCallback</servlet-name>
+        <url-pattern>/oauth2callback</url-pattern>
+    </servlet-mapping>
+</web-app>
