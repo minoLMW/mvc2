@@ -17,8 +17,22 @@ public class KakaoServiceImpl implements KakaoService {
 
     private static final String CLIENT_ID = "7d182da6678fff468dfa3be56fcca737";
     private static final String REDIRECT_URI = "http://localhost:8081/mvc2_war/kakao.member";
+    private static final String AUTH_BASE_URL = "https://kauth.kakao.com/oauth/authorize";
     private static final String TOKEN_URL = "https://kauth.kakao.com/oauth/token";
     private static final String USER_INFO_URL = "https://kapi.kakao.com/v2/user/me";
+
+    @Override
+    public String getAuthUrl() {
+        try {
+            String encodedRedirect = URLEncoder.encode(REDIRECT_URI, "UTF-8");
+            return AUTH_BASE_URL
+                    + "?client_id=" + CLIENT_ID
+                    + "&redirect_uri=" + encodedRedirect
+                    + "&response_type=code";
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Redirect URI 인코딩 실패", e);
+        }
+    }
 
     @Override
     public String getAccessToken(String code) {
@@ -75,7 +89,7 @@ public class KakaoServiceImpl implements KakaoService {
                 }
 
                 Map<String, Object> map = new Gson().fromJson(sb.toString(), Map.class);
-                dto.setKakaoId(String.valueOf(map.get("id")));  // 여기 수정!
+                dto.setKakaoId(String.valueOf(map.get("id")));
 
                 Map<String, Object> kakaoAccount = (Map<String, Object>) map.get("kakao_account");
                 if (kakaoAccount != null) {
@@ -94,8 +108,8 @@ public class KakaoServiceImpl implements KakaoService {
 
     @Override
     public void registerOrLogin(KakaoDTO userInfo, HttpSession session) {
-        if (!kakaoUserDB.containsKey(userInfo.getKakaoId())) {  // 수정!
-            kakaoUserDB.put(userInfo.getKakaoId(), userInfo);    // 수정!
+        if (!kakaoUserDB.containsKey(userInfo.getKakaoId())) {
+            kakaoUserDB.put(userInfo.getKakaoId(), userInfo);
         }
         session.setAttribute("user", userInfo);
     }

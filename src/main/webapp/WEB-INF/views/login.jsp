@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 	<title>login</title>
@@ -29,7 +30,7 @@
 		.login .links {position: relative;width: 100%;display: flex;align-items: center;justify-content: space-between;padding: 0 20px;}
 		.login .links .sns-login {display:flex; align-items:center; justify-content:center; gap:10px;}
 		.login .links a {color: #fff;text-decoration: none;}
-		.login .links .kakaoicon {display:block;width:50px;height:50px;border:none;border-radius:50%;background:#ffe90a url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/KakaoTalk_logo.svg/960px-KakaoTalk_logo.svg.png') no-repeat 50% / 80% auto;}
+		.login .links .kakaoicon {display:block;width:50px;height:50px;border:none;border-radius:50%;background:#ffe90a url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/KakaoTalk_logo.svg/960px-KakaoTalk_logo.svg.png') no-repeat 50% / 80% auto;cursor: pointer;}
 		.login .links .googleicon {display:block;width:50px;height:50px;border:none;border-radius:50%;background:#fff url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png') no-repeat 50% / 80% auto;}
 		.login .links .signup {}
 	</style>
@@ -53,22 +54,19 @@
 		</div>
 		<div class="links">
 			<div class="sns-login">
-				<button onclick="kakaoLogin()" class="kakaoicon" aria-label="카카오 간편가입"></button>
-				<a href="${pageContext.request.contextPath}/login/google" class="googleicon" aria-label="구글 간편가입"></a>
+				<!-- 수정된 카카오 로그인 버튼 -->
+				<button type="button"
+						class="kakaoicon"
+						aria-label="카카오 간편가입"
+						onclick="location.href='${pageContext.request.contextPath}/kakaoLogin.member'">
+				</button>
+				<a href="${pageContext.request.contextPath}/login/google"
+				   class="googleicon"
+				   aria-label="구글 간편가입"></a>
 			</div>
 			<a href="join.member" class="signup">Sign up</a>
 		</div>
 	</form>
 </div>
-<script>
-	function kakaoLogin() {
-		location.href = "https://kauth.kakao.com/oauth/authorize" +
-			"?client_id=7d182da6678fff468dfa3be56fcca737" +
-			"&redirect_uri=http://localhost:8081/mvc2_war/kakao.member" +
-			"&response_type=code" +
-			"&prompt=login";  // 항상 계정 선택 가능하도록 강제 로그인 창 띄움
-	}
-</script>
-
 </body>
 </html>
