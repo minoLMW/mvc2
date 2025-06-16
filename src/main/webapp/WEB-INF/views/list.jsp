@@ -13,37 +13,57 @@
     <style>
       * {margin:0; padding:0; font-family:'SF_HambakSnow';}
       @font-face {
-          font-family: 'SF_HambakSnow';
-          src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonnums_2106@1.1/SF_HambakSnow.woff') format('woff');
-          font-weight: normal;
-          font-style: normal;
+        font-family: 'SF_HambakSnow';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/SF_HambakSnow.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
       }
-      h2 {display:flex; align-items:center; padding:25px 50px 25px 25px;}
-      h2::after {content:''; display:inline-block; width:50px; height:50px;  background:url('https://www.notion.so/_assets/a7e5ea83ae6a4462.gif') no-repeat center right / 50px auto;;}
-      .container {width: calc(100% - 50px); margin: 0 auto;}
-      .write-btn {text-align: right; margin-bottom: 20px;}
-      .write-btn a {display: inline-block; padding: 10px 20px; background-color: #cdb4db; color: white; text-decoration: none; border-radius: 5px;}
-      table {width: 100%; table-layout: fixed; border: none; border-collapse: collapse; border-spacing: 0;}
-      table thead {background-color: #f6f6f6;}
-      table thead th {padding: 12px; border-top: 1px solid #E6E6E6;}
-      table tbody td {padding: 12px; border-top: 1px solid #E6E6E6;}
-      table tbody tr:last-child td {border-bottom: 1px solid #E6E6E6;}
-      table tbody tr:hover {background-color: #FFE5B4;}
-      table tbody tr td {position: relative;}
-      table tbody tr td::before {content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 1px; height: 16px; background-color: #e6e6e6;}
-      table tbody tr td:first-child::before {display: none;}
-      .num {text-align: center; width: 80px;}
-      .title {overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center;}
-      .title a {overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: underline;}
-      .writer {text-align: center; width: 100px;}
-      .createdAt {text-align: center; width: 120px;}
-      .views {text-align: center; width: 100px;}
-      .actions {text-align: center; width: 120px;}
-      .actions a {margin: 0 5px; color: #666; text-decoration: none;}
-      .actions a:hover {color: #cdb4db;}
+      body {padding:0 25px; background-color:#001b3b; color:#fff;}
+      h2 {display:flex; justify-content:center; align-items:center; padding:25px 50px 25px 25px; font-size:50px; font-family: 'SF_HambakSnow';}
+      h2::after {content:''; display:inline-block; width:75px; height:75px;  background:url('https://www.notion.so/_assets/a7e5ea83ae6a4462.gif') no-repeat center right / 75px auto;;}
+      table {width:calc(100% - 50px); margin:0 auto; table-layout:fixed; border:none;border-collapse: collapse; border-spacing: 0;}
+      table thead {background-color:#001b3b;}
+      table thead th {padding:12px; border-top:1px solid #666;}
+      table tbody td {padding:12px; border-top:1px solid #666;}
+      table tbody tr td a {font-family:'맑은 고딕'; color:#fff}
+      table tbody tr:last-child td {border-bottom:1px solid #666;}
+      table tbody tr:hover {background-color:#14a5a5;}
+      table tbody tr td {position:relative;}
+      table tbody tr td::before {content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:1px; height:16px; background-color:#e6e6e6;}
+      table tbody tr td:first-child::before {display:none;}
+      table tbody tr td[colspan="6"]:hover {background-color:none;}
+      .num {text-align:center;}
+      .title {overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align:center;}
+      .title a {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;text-decoration:underline;}
+      .writer {text-align:center;}
+      .createdAt {text-align:center;}
+      .views {text-align:center;}
+      .write-btn {margin-bottom:20px; text-align:right;}
+      .write-btn a {display:inline-block; height:50px; padding:0 16px; font-size:20px; border-radius:12px; border:none; color:#fff; background-color:#cdb4db}
+
+      /* 눈 내리는 배경 클래스 */
+      .snowing {
+        background-image:
+                url('https://currys-ssl.cdn.dixons.com/css/themes/email/2017-2018/wk35/XmasDayPC/V1/_snow.png'),
+                url('https://currys-ssl.cdn.dixons.com/css/themes/email/2017-2018/wk35/XmasDayPC/V1/_snow2.png'),
+                url('https://currys-ssl.cdn.dixons.com/css/themes/email/2017-2018/wk35/XmasDayPC/V1/_snow3.png');
+        background-repeat: repeat;
+        background-attachment: fixed;
+        animation: snow 20s steps(600) infinite;
+      }
+
+      /* 눈 내리는 애니메이션 */
+      @keyframes snow {
+        0% {
+          background-position: 0em 0em, 0em 0em, 0em 0em;
+        }
+        100% {
+          background-position: -50em 200em, 0em 50em, 50em 100em;
+        }
+      }
     </style>
   </head>
-  <body>
+  <body class="snowing">
     <h2>게시글 목록</h2>
     <div class="container">
       <div class="write-btn">
