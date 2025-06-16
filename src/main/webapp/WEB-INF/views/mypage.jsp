@@ -20,7 +20,6 @@
 <head>
     <title>마이페이지</title>
     <style>
-        
 		@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
 		* {margin: 0;padding: 0;box-sizing: border-box;font-family: "Quicksand", sans-serif;}
 		body {display: flex;justify-content: center;align-items: center;min-height: 100vh;background: #111;width: 100%;overflow: hidden;}
@@ -58,10 +57,10 @@
         .glass-card h2 {color:#fff; font-size:30px;}
         .glass-card p {margin-top:30px; color:#fff; font-size:22px;}
         .glass-card p + p {margin-top:0;}
-        .glass-card .buttons {display:flex; justify-content:center; gap:20px; width:100%;}
+        .glass-card .buttons {display:flex; flex-wrap:wrap; justify-content:center; gap:20px; width:100%;}
         .glass-card a,
         .glass-card button {display:inline-block;position:relative;padding:8px 20px;margin-top:15px;background-color:#fff;border:none;border-radius:20px;color:#000;font-weight:bold;text-decoration:none;cursor:pointer;}
-        .glass-card a {background-color:#000; color:#fff;}
+        .glass-card a {margin-top:50px; background-color:#000; color:#fff;}
     </style>
 </head>
 <body>
