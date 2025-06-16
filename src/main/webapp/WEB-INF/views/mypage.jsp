@@ -616,7 +616,8 @@
     return VanillaTilt;
 
     }());
-
+</script>
+<script>
     window.addEventListener("DOMContentLoaded", function() {
         VanillaTilt.init(document.querySelector(".glass-card"), {
             max: 25,
