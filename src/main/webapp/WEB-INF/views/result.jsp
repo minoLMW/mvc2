@@ -27,8 +27,9 @@
 
   <%-- 카카오 로그인 --%>
   <c:when test="${not empty kakaoUser}">
-    <h2>${kakaoUser.nickname}님, 로그인 성공!</h2>
-    <p><a href="mypage.member">마이페이지</a> | <a href="logout.member">로그아웃</a></p>
+    <h2>${kakaoUser.nickname} 님, 카카오 로그인 성공!</h2>
+    <p>이메일: ${kakaoUser.email}</p>
+    <p><a href="mypage.member">마이페이지</a></p>
   </c:when>
 
   <%-- 구글 로그인 --%>

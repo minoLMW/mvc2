@@ -17,6 +17,7 @@ public class MemberController extends HttpServlet {
     private MemberService service = new MemberServiceImpl();
     private KakaoService kakaoService = new KakaoServiceImpl();
 
+
     public MemberController() {}
 
     @Override
@@ -31,6 +32,7 @@ public class MemberController extends HttpServlet {
 
     protected void doAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        HttpSession session = req.getSession();
         String uri = req.getRequestURI();
         String context = req.getContextPath();
         String command = uri.substring(context.length());
@@ -49,12 +51,21 @@ public class MemberController extends HttpServlet {
                 service.login(req, resp);
                 break;
             case "/logout.member":
-                HttpSession session = req.getSession();
+
                 session.invalidate();
                 resp.sendRedirect(req.getContextPath() + "/login.member");
                 break;
             case "/mypage.member":
-                req.getRequestDispatcher("/WEB-INF/views/mypage.jsp").forward(req, resp);
+                Object loginUser = session.getAttribute("loginUser");
+                Object kakaoUser = session.getAttribute("kakaoUser");
+
+                if (loginUser != null) {
+                    req.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(req, resp);
+                } else if (kakaoUser != null) {
+                    req.getRequestDispatcher("/WEB-INF/views/kakao/mypage.jsp").forward(req, resp);
+                } else {
+                    resp.sendRedirect("loginForm.member");
+                }
                 break;
             case "/modifyForm.member":
                 if(req.getMethod().equals("GET")) {
@@ -83,9 +94,18 @@ public class MemberController extends HttpServlet {
             case "/kakao.member":
                 String code = req.getParameter("code");
                 String accessToken = kakaoService.getAccessToken(code);
-                KakaoDTO kakaoUser = kakaoService.getUserInfo(accessToken);
-                kakaoService.registerOrLogin(kakaoUser, req.getSession());
-                req.setAttribute("kakaoUser", kakaoUser);
+
+                // 변수명 충돌 방지를 위해 dto로 이름 변경
+                KakaoDTO dto = kakaoService.getUserInfo(accessToken);
+
+                kakaoService.registerOrLogin(dto, session);
+
+                // 세션 저장
+                session.setAttribute("kakaoUser", dto);
+
+                // request 저장
+                req.setAttribute("kakaoUser", dto);
+
                 req.getRequestDispatcher("/WEB-INF/views/result.jsp").forward(req, resp);
                 break;
             default:

@@ -23,6 +23,15 @@ public class KakaoDTO {
     public void setNickname(String nickname) { this.nickname = nickname; }
 
     public String getUserid() {
-        return "kakao_" + email;
+        return kakaoId != null ? "kakao_" + kakaoId : "kakao_user";
+    }
+
+    @Override
+    public String toString() {
+        return "KakaoDTO{" +
+                "kakaoId='" + kakaoId + '\'' +
+                ", email='" + email + '\'' +
+                ", nickname='" + nickname + '\'' +
+                '}';
     }
 }

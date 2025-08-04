@@ -97,6 +97,6 @@ public class KakaoServiceImpl implements KakaoService {
         if (!kakaoUserDB.containsKey(userInfo.getKakaoId())) {  // 수정!
             kakaoUserDB.put(userInfo.getKakaoId(), userInfo);    // 수정!
         }
-        session.setAttribute("user", userInfo);
+        session.setAttribute("kakaoUser", userInfo);
     }
 }

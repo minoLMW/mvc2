@@ -1,7 +1,5 @@
 package com.koreait.mvc2.controller;
 
-import com.koreait.mvc2.dto.MemberDTO;
-import com.koreait.mvc2.dao.MemberDAO;
 import com.google.api.services.oauth2.model.Userinfoplus;
 import com.koreait.mvc2.dto.GoogleDTO;
 import com.koreait.mvc2.service.GoogleAuthService;
